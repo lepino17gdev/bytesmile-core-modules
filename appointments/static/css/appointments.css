@@ -1,0 +1,168 @@
+/* Appointments Module CSS
+   Scoped utility styles to keep module self-contained.
+   Assumes Bootstrap is present and uses CSS variables if your theme sets them.
+*/
+
+:root {
+  --appointments-accent: #2d89ef;
+  --appointments-muted: #6c757d;
+  --appointments-bg: #ffffff;
+  --appointments-bg-alt: #f7f9fb;
+  --appointments-border: #e9ecef;
+}
+
+.appointments-page {
+  padding: 1rem;
+  background: var(--appointments-bg-alt);
+}
+
+.appointments-header {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  margin-bottom: 1rem;
+}
+
+.appointments-header .title {
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+.appointments-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin-bottom: 1rem;
+}
+
+.appointments-card {
+  background: var(--appointments-bg);
+  border: 1px solid var(--appointments-border);
+  border-radius: .75rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,.05);
+  overflow: hidden;
+}
+
+.appointments-card .card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .75rem 1rem;
+  background: #fff;
+  border-bottom: 1px solid var(--appointments-border);
+}
+
+.appointments-card .card-title {
+  margin: 0;
+  font-weight: 600;
+}
+
+.appointments-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.appointments-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.appointments-table th,
+.appointments-table td {
+  white-space: nowrap;
+  padding: .75rem 1rem;
+  border-bottom: 1px solid var(--appointments-border);
+  vertical-align: middle;
+}
+
+.appointments-table th {
+  font-weight: 600;
+  color: var(--appointments-muted);
+  background: #fafbfc;
+}
+
+.appointment-status {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .25rem .5rem;
+  border-radius: 999px;
+  font-size: .8rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+}
+
+.appointment-status.pending {
+  color: #856404;
+  background: #fff3cd;
+  border-color: #ffeeba;
+}
+
+.appointment-status.confirmed {
+  color: #155724;
+  background: #d4edda;
+  border-color: #c3e6cb;
+}
+
+.appointment-status.cancelled {
+  color: #721c24;
+  background: #f8d7da;
+  border-color: #f5c6cb;
+}
+
+.appointments-pagination {
+  display: flex;
+  justify-content: flex-end;
+  gap: .5rem;
+  padding: .75rem 1rem;
+  background: #fff;
+  border-top: 1px solid var(--appointments-border);
+}
+
+/* Toolbar filters */
+.filter-chip {
+  border: 1px solid var(--appointments-border);
+  background: #fff;
+  border-radius: 999px;
+  padding: .35rem .75rem;
+  cursor: pointer;
+  transition: all .15s ease;
+  font-size: .9rem;
+}
+
+.filter-chip.active,
+.filter-chip:hover {
+  border-color: var(--appointments-accent);
+  color: var(--appointments-accent);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .appointments-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .35rem;
+  }
+  .appointments-toolbar {
+    gap: .35rem;
+  }
+  .appointments-table th,
+  .appointments-table td {
+    padding: .6rem .75rem;
+  }
+}
+
+/* Optional dark mode if your base sets [data-theme="dark"] */
+html[data-theme="dark"] .appointments-card {
+  background: #0f1115;
+  border-color: #20252b;
+}
+html[data-theme="dark"] .appointments-table th {
+  background: #0b0d11;
+  color: #c6cdd6;
+}
+html[data-theme="dark"] .filter-chip {
+  background: #0f1115;
+  border-color: #20252b;
+  color: #c6cdd6;
+}

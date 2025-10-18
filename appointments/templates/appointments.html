@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Appointments</h3>
+<button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#createModal">
+  <i class="bi bi-plus"></i> New Appointment
+</button>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th><th>Patient</th><th>Doctor</th><th>Date</th><th>Status</th>
+    </tr>
+  </thead>
+  <tbody id="appointmentTable"></tbody>
+</table>
+
+<link rel="stylesheet" href="/modules/appointments/static/css/appointments.css">
+<script src="/modules/appointments/static/js/appointments.js" defer></script>
+{% endblock %}

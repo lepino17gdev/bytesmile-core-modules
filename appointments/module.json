@@ -2,6 +2,8 @@
   "name": "Appointments",
   "slug": "appointments",
   "version": "1.0.0",
+  "path": "/appointments",
+  "icon": "bi bi-calendar-check",
   "description": "Manage patient appointments, scheduling, and reminders.",
   "author": "ByteSmile Core Team",
   "price": 199.00,
@@ -10,12 +12,13 @@
   "entry_point": "routes/appointments.py",
   "models": ["models/appointment_model.py"],
   "templates": ["templates/appointments.html"],
+  "sidebar_template": "templates/sidebar/sidebar_appointments.html",
   "static": {
     "css": ["static/css/appointments.css"],
     "js": ["static/js/appointments.js"]
   },
   "dependencies": {
-    "python": [ "sqlalchemy", "fastapi", "jinja2" ]
+    "python": ["sqlalchemy", "fastapi", "jinja2"]
   },
   "permissions": ["admin", "manager", "staff"],
   "routes_prefix": "/api/appointments",
