@@ -1,21 +1,14 @@
-# modules/appointments/install.py
-import importlib.util
-import os
+from core.db import Base, engine
+from sqlalchemy import inspect
+from models.appointment_model import Appointment
 
-def install(app):
-    """
-    Module-specific installation logic.
-    Registers models dynamically to avoid ImportError during install.
-    """
-    module_dir = os.path.dirname(__file__)
-    model_path = os.path.join(module_dir, "models", "appointment_model.py")
+def install(app=None):
+    """Safely install the Appointments module without duplicate models."""
+    inspector = inspect(engine)
 
-    if os.path.exists(model_path):
-        spec = importlib.util.spec_from_file_location("appointments_model", model_path)
-        module = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(module)
-        print("✅ Appointments model loaded successfully.")
+    # If the table doesn't exist, create it
+    if "appointments" not in inspector.get_table_names():
+        Base.metadata.create_all(bind=engine, tables=[Appointment.__table__])
+        print("✅ Appointments table created.")
     else:
-        print("⚠️ appointments_model.py not found; skipping model load.")
-
-    print("🎯 Appointments module installation complete.")
+        print("ℹ️ Appointments table already exists — skipping creation.")
