@@ -152,7 +152,7 @@
     dropdown.addEventListener("click", () => {
       const sidebar = qs(".sidebar");
       if (sidebar && !sidebar.classList.contains("expanded")) {
-        sidebar.classList.add("expanded"); // ✅ Expand sidebar if collapsed
+        document.getElementById('toggleSidebar').click(); // ✅ Expand sidebar if collapsed
       }
     });
   }
