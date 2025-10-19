@@ -11,12 +11,25 @@
   "category": "Clinic Operations",
   "entry_point": "routes/appointments.py",
   "models": ["models/appointment_model.py"],
-  "templates": ["appointments.html"],
-  "sidebar_template": "sidebar_appointments.html",
-  "static": {
-    "css": ["css/appointments.css"],
-    "js": ["js/appointments.js","js/sidebar_appointments.js"]
+
+  "templates": {
+    "templates/appointments.html": "templates/appointments.html"
   },
+
+  "sidebar_template": {
+    "templates/sidebar/sidebar_appointments.html": "templates/sidebar/sidebar_appointments.html"
+  },
+
+  "static": {
+    "css": {
+      "static/css/appointments.css": "static/appointments/css/appointments.css"
+    },
+    "js": {
+      "static/js/appointments.js": "static/appointments/js/appointments.js",
+      "static/js/sidebar_appointments.js": "static/appointments/js/sidebar_appointments.js"
+    }
+  },
+
   "dependencies": {
     "python": ["sqlalchemy", "fastapi", "jinja2"]
   },
