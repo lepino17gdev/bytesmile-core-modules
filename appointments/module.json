@@ -15,11 +15,9 @@
   "templates": {
     "templates/appointments.html": "templates/appointments.html"
   },
-
   "sidebar_template": {
     "templates/sidebar/sidebar_appointments.html": "templates/sidebar/sidebar_appointments.html"
   },
-
   "static": {
     "css": {
       "static/css/appointments.css": "static/appointments/css/appointments.css"
@@ -29,7 +27,9 @@
       "static/js/sidebar_appointments.js": "static/appointments/js/sidebar_appointments.js"
     }
   },
-
+  "page_routes": {
+    "page_routes/page_appointments.py": "page_routes/page_appointments.py"
+  },
   "dependencies": {
     "python": ["sqlalchemy", "fastapi", "jinja2"]
   },
