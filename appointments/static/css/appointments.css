@@ -166,3 +166,32 @@ html[data-theme="dark"] .filter-chip {
   border-color: #20252b;
   color: #c6cdd6;
 }
+
+ .list-unstyled {
+  list-style: none !important;
+  padding-left: 0;
+  margin-left: 0;
+}
+
+.btn-toggle {
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  font-weight: 500;
+  padding: 8px 12px;
+  width: 100%;
+  text-align: left;
+}
+
+.btn-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.btn-toggle-nav a {
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+}
+
+.btn-toggle-nav a:hover {
+  color: #fff;
+}

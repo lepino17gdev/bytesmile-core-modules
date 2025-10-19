@@ -1,23 +1,19 @@
 // Appointments Module JS
-// Safe-by-default: works even if APIs are not yet implemented.
-// Wire this file from appointments.html or load it globally per-page.
-
 (function () {
   const state = {
     page: 1,
     pageSize: 10,
-    status: "all", // all | pending | confirmed | cancelled
+    status: "all",
     search: "",
     rows: []
   };
 
-  // Sample data (fallback)
   const sampleRows = [
     { id: 101, patient: "Juan Dela Cruz", dentist: "Dr. Santos", date: "2025-10-16 09:00", status: "pending" },
-    { id: 102, patient: "Maria Reyes",    dentist: "Dr. Dizon",  date: "2025-10-16 10:30", status: "confirmed" },
-    { id: 103, patient: "Pedro Marcos",   dentist: "Dr. Santos", date: "2025-10-16 13:00", status: "cancelled" },
-    { id: 104, patient: "Ana Lim",        dentist: "Dr. Garcia", date: "2025-10-17 11:00", status: "confirmed" },
-    { id: 105, patient: "Liza Cruz",      dentist: "Dr. Dizon",  date: "2025-10-17 14:30", status: "pending" }
+    { id: 102, patient: "Maria Reyes", dentist: "Dr. Dizon", date: "2025-10-16 10:30", status: "confirmed" },
+    { id: 103, patient: "Pedro Marcos", dentist: "Dr. Santos", date: "2025-10-16 13:00", status: "cancelled" },
+    { id: 104, patient: "Ana Lim", dentist: "Dr. Garcia", date: "2025-10-17 11:00", status: "confirmed" },
+    { id: 105, patient: "Liza Cruz", dentist: "Dr. Dizon", date: "2025-10-17 14:30", status: "pending" }
   ];
 
   function qs(sel, el = document) { return el.querySelector(sel); }
@@ -31,12 +27,10 @@
   }
 
   function capitalize(s) {
-    if (!s) return "";
-    return s.replace(/\b\w/g, (m) => m.toUpperCase());
+    return s ? s.replace(/\b\w/g, (m) => m.toUpperCase()) : "";
   }
 
   async function fetchRows() {
-    // Try API, fallback to sample
     try {
       const params = new URLSearchParams({
         page: state.page,
@@ -48,8 +42,8 @@
       if (!res.ok) throw new Error("No API yet");
       const data = await res.json();
       state.rows = Array.isArray(data.items) ? data.items : [];
-    } catch (e) {
-      state.rows = sampleRows.slice(); // fallback
+    } catch {
+      state.rows = sampleRows.slice();
     }
     renderTable();
   }
@@ -141,16 +135,24 @@
       const action = btn.dataset.action;
       if (action === "view") {
         console.log("View appointment", id);
-        // window.location.href = `/appointments/${id}`;
       } else if (action === "resched") {
         console.log("Reschedule", id);
       } else if (action === "cancel") {
         if (confirm("Cancel this appointment?")) {
           console.log("Cancelled", id);
-          // Call API then refresh:
-          // await fetch(`/api/appointments/${id}`, { method: "DELETE" });
-          // fetchRows();
         }
+      }
+    });
+  }
+
+  function handleSidebarBehavior() {
+    const dropdown = qs("#appointments-dropdown");
+    if (!dropdown) return;
+
+    dropdown.addEventListener("click", () => {
+      const sidebar = qs(".sidebar");
+      if (sidebar && !sidebar.classList.contains("expanded")) {
+        sidebar.classList.add("expanded"); // ✅ Expand sidebar if collapsed
       }
     });
   }
@@ -158,6 +160,7 @@
   document.addEventListener("DOMContentLoaded", () => {
     handleToolbar();
     handleRowActions();
+    handleSidebarBehavior(); // ✅ new behavior
     fetchRows();
   });
 })();
