@@ -32,7 +32,7 @@
     }
   },
   "utils": {
-    "utils/utils_invites.py": "utils/utils_invites.py"
+    "utils/utils_invites.py": "core/utils/utils_invites.py"
   },
   "dependencies": {
     "python": [
