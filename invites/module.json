@@ -10,24 +10,29 @@
   "currency": "PHP",
   "category": "Clinic Operations",
   "entry_point": "routes/invites.py",
-  "models": [
-    "models/invites_model.py"
-  ],
-  "templates": [
-    "templates/invites.html"
-  ],
-  "sidebar_template": "templates/sidebar/sidebar_invites.html",
-  "page_routes": [
-    "page_routes/page_invites.py"
-  ],
+  "models": {
+    "models/model_invites.py": "models/model_invites.py"
+  },
+  "templates": {
+    "templates/invites.html": "templates/invites.html"
+  },
+  "sidebar_template": {
+    "templates/sidebar/sidebar_invites.html": "templates/sidebar/sidebar_invites.html"
+  },
+  "page_routes": {
+    "page_routes/page_invites.py": "page_routes/page_invites.py"
+  },
   "static": {
-    "css": [
-      "static/css/invites.css"
-    ],
-    "js": [
-      "static/js/invites.js",
-      "static/js/sidebar_invites.js"
-    ]
+    "css": {
+      "static/css/invites.css": "static/css/invites.css"
+    },
+    "js": {
+      "static/js/invites.js": "static/js/invites.js",
+      "static/js/sidebar_invites.js": "static/js/sidebar_invites.js"
+    }
+  },
+  "utils": {
+    "utils/utils_invites.py": "utils/utils_invites.py"
   },
   "dependencies": {
     "python": [
