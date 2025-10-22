@@ -1,0 +1,49 @@
+{
+  "name": "Sample",
+  "slug": "sample",
+  "version": "1.0.0",
+  "path": "/sample",
+  "icon": "bi bi-puzzle",
+  "description": "sample module",
+  "author": "ByteSmile Core Team",
+  "price": 0.0,
+  "currency": "PHP",
+  "category": "Clinic Operations",
+  "entry_point": "routes/sample.py",
+  "models": {
+    "models/model_sample.py": "models/model_sample.py"
+  },
+  "templates": {
+    "templates/sample.html": "templates/sample.html"
+  },
+  "sidebar_template": {
+    "templates/sidebar/sidebar_sample.html": "templates/sidebar/sidebar_sample.html"
+  },
+  "page_routes": {
+    "page_routes/page_sample.py": "page_routes/page_sample.py"
+  },
+  "static": {
+    "css": {
+      "static/css/sample.css": "static/css/sample.css"
+    },
+    "js": {
+      "static/js/sample.js": "static/js/sample.js",
+      "static/js/sidebar_sample.js": "static/js/sidebar_sample.js"
+    }
+  },
+  "utils": {},
+  "dependencies": {
+    "python": [
+      "sqlalchemy",
+      "fastapi",
+      "jinja2"
+    ]
+  },
+  "permissions": [
+    "admin",
+    "manager",
+    "staff"
+  ],
+  "routes_prefix": "/api/sample",
+  "status": "active"
+}
