@@ -42,14 +42,14 @@ def create_invite(data: InviteRequest):
         raise HTTPException(status_code=400, detail=f"Role '{data.role}' does not exist")
 
     # Check if there's an existing unexpired invite
-    existing = db.query(Invite).filter_by(email=data.email, role_id=role.id, accepted=False).first()
+    existing = db.query(Invites).filter_by(email=data.email, role_id=role.id, accepted=False).first()
     if existing and not existing.is_expired():
         db.close()
         raise HTTPException(status_code=400, detail="An active invite already exists for this email and role")
 
     # Create and store invite
     token = create_invite_token(data.email, data.role)
-    invite = Invite(email=data.email, role_id=role.id, token=token)
+    invite = Invites(email=data.email, role_id=role.id, token=token)
     db.add(invite)
     db.commit()
     db.refresh(invite)
@@ -66,7 +66,7 @@ def create_invite(data: InviteRequest):
     send_email(data.email, "ByteSmile Invitation", email_body)
     # TODO: Send invite email here using your email service
     return {
-        "message": "Invite created successfully",
+        "message": "Invites created successfully",
         "invite_link": invite_link,
         "expires_at": invite.expires_at.isoformat()
     }
@@ -83,14 +83,14 @@ def verify_invite(token: str):
         db.close()
         raise HTTPException(status_code=400, detail="Invalid or expired invite token")
 
-    invite = db.query(Invite).filter_by(token=token).first()
+    invite = db.query(Invites).filter_by(token=token).first()
     if not invite:
         db.close()
-        raise HTTPException(status_code=404, detail="Invite not found")
+        raise HTTPException(status_code=404, detail="Invites not found")
 
     if invite.is_expired():
         db.close()
-        raise HTTPException(status_code=400, detail="Invite expired")
+        raise HTTPException(status_code=400, detail="Invites expired")
 
     db.close()
     return {"valid": True, "email": data["email"], "role": data["role"]}
@@ -107,18 +107,18 @@ def accept_invite_api(token: str = Form(...), password: str = Form(...)):
         db.close()
         raise HTTPException(status_code=400, detail="Invalid or expired invite token")
 
-    invite = db.query(Invite).filter_by(token=token).first()
+    invite = db.query(Invites).filter_by(token=token).first()
     if not invite:
         db.close()
-        raise HTTPException(status_code=404, detail="Invite not found")
+        raise HTTPException(status_code=404, detail="Invites not found")
 
     if invite.is_expired():
         db.close()
-        raise HTTPException(status_code=400, detail="Invite expired")
+        raise HTTPException(status_code=400, detail="Invites expired")
 
     if invite.accepted:
         db.close()
-        raise HTTPException(status_code=400, detail="Invite already used")
+        raise HTTPException(status_code=400, detail="Invites already used")
 
     role = db.query(Role).filter_by(id=invite.role_id).first()
     if not role:
@@ -144,13 +144,13 @@ def accept_invite_api(token: str = Form(...), password: str = Form(...)):
     db.commit()
     db.close()
 
-    return {"message": f"Invite accepted, user '{user_email}' created successfully as '{role_name}'"}
+    return {"message": f"Invites accepted, user '{user_email}' created successfully as '{role_name}'"}
 
 
 @router.get("/list")
 def list_invites():
     db = SessionLocal()
-    invites = db.query(Invite).all()
+    invites = db.query(Invites).all()
     data = []
     for i in invites:
         data.append({
@@ -168,12 +168,12 @@ def list_invites():
 @router.delete("/revoke")
 def revoke_invite(token: str):
     db = SessionLocal()
-    invite = db.query(Invite).filter_by(token=token).first()
+    invite = db.query(Invites).filter_by(token=token).first()
     if not invite:
         db.close()
-        raise HTTPException(status_code=404, detail="Invite not found")
+        raise HTTPException(status_code=404, detail="Invites not found")
     db.delete(invite)
     db.commit()
     db.close()
-    return {"message": "Invite revoked successfully"}
+    return {"message": "Invites revoked successfully"}
 
