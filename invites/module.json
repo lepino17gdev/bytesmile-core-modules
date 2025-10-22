@@ -11,7 +11,7 @@
   "category": "Clinic Operations",
   "entry_point": "routes/invites.py",
   "models": {
-    "models/model_invites.py": "models/model_invites.py"
+    "models/model_invites.py": "core/models/model_invites.py"
   },
   "templates": {
     "templates/invites.html": "templates/invites.html"
