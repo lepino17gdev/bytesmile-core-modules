@@ -1,21 +1,15 @@
-import os, sys, importlib.util
+import os, sys
 from core.db import Base, engine
 
+# Ensure local 'models' directory is importable
+current_dir = os.path.dirname(os.path.abspath(__file__))
+models_path = os.path.join(current_dir, "models")
+if models_path not in sys.path:
+    sys.path.insert(0, models_path)
+
+from model_invites import Invites
+
 def install(app=None):
-    """Safely register module models without duplicate metadata."""
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    models_path = os.path.join(current_dir, "models", "model_invites.py")
-
-    # Dynamically import model file
-    spec = importlib.util.spec_from_file_location("modules.invites.models.model_invites", models_path)
-    mod = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(mod)
-
-    # Find model classes that have __table__ defined
-    created_tables = []
-    for obj in mod.__dict__.values():
-        if hasattr(obj, "__table__"):
-            Base.metadata.create_all(bind=engine, tables=[obj.__table__])
-            created_tables.append(obj.__tablename__)
-
-    print(f"✅ Invites module installed successfully (tables: {', '.join(created_tables)})")
+    """Register Invites model and create its table."""
+    Base.metadata.create_all(bind=engine, tables=[Invites.__table__])
+    print("✅ Invites module installed successfully.")
