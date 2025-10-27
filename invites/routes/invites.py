@@ -150,7 +150,7 @@ def accept_invite_api(token: str = Form(...), password: str = Form(...)):
 @router.get("/list")
 def list_invites():
     db = SessionLocal()
-    invites = db.query(Invites).all()
+    invites = db.query(Invites, Role.name.label("role_name")).join(Role, Invites.role_id == Role.id).all()
     data = []
     for i in invites:
         data.append({
