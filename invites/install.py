@@ -19,8 +19,9 @@ def install(app=None):
 
         # ✅ Unregister after installation to avoid re-import metadata issues
         print(f"Base.metadata.tables: {Base.metadata.tables}, Invites.__name__: {Invites.__name__}, Invites.__table__: {Invites.__table__}, Invites.__name__ in Base.metadata.tables: {Invites.__name__ in Base.metadata.tables}")
-        if Invites.__name__ in Base.metadata.tables:
-            Base.metadata.remove(Invites.__table__)
+        table_name = Invites.__table__.fullname
+        if table_name in Base.metadata.tables:
+            Base.metadata.remove(Base.metadata.tables[table_name])
             print("🧹 Model unregistered from metadata after install.")
 
     except Exception as e:

@@ -10,9 +10,12 @@ def uninstall():
     try:
         from model_invites import Invites
 
-        if Invites.__table__.fullname in Base.metadata.tables:
-            Base.metadata.remove(Invites.__table__)
-            print("🧹 Unregistered Invites model from SQLAlchemy metadata.")
+        table_name = Invites.__table__.fullname
+        if table_name in Base.metadata.tables:
+            Base.metadata.remove(Base.metadata.tables[table_name])
+            print(f"🧹 Unregistered {table_name} model from SQLAlchemy metadata.")
+        else:
+            print(f"ℹ️ Table {table_name} not found in metadata (already unregistered).")
 
         print("🗑️ Invites module uninstalled successfully (data retained).")
 
