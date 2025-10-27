@@ -11,12 +11,12 @@ from werkzeug.security import generate_password_hash
 from core.utils.auth_utils import require_roles
 from core.utils.utils_invites import create_invite_token, decode_invite_token
 from core.models.role import Role
+from core.models.model_invites import Invites
 from core.utils.smtp_utils import send_email
 from core.models.user import User
 from core.db import SessionLocal
 import os
 
-Invites = None 
 
 router = APIRouter(prefix="/api/invite", tags=["Invitations"])
 MY_DOMAIN = os.getenv("MY_DOMAIN")
