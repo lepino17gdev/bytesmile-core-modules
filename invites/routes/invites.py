@@ -150,17 +150,19 @@ def accept_invite_api(token: str = Form(...), password: str = Form(...)):
 @router.get("/list")
 def list_invites():
     db = SessionLocal()
+    # Join roles to get their names
     invites = db.query(Invites, Role.name.label("role_name")).join(Role, Invites.role_id == Role.id).all()
+
     data = []
-    for i in invites:
+    for invite, role_name in invites:
         data.append({
-            "email": i.email,
-            "role": i.role.name if i.role else None,
-            "created_at": i.created_at.strftime("%Y-%m-%d %H:%M"),
-            "expires_at": i.expires_at.strftime("%Y-%m-%d %H:%M"),
-            "accepted": i.accepted,
-            "expired": i.is_expired(),
-            "token": i.token
+            "email": invite.email,
+            "role": role_name,
+            "created_at": invite.created_at.strftime("%Y-%m-%d %H:%M"),
+            "expires_at": invite.expires_at.strftime("%Y-%m-%d %H:%M"),
+            "accepted": invite.accepted,
+            "expired": invite.is_expired(),
+            "token": invite.token
         })
     db.close()
     return data
