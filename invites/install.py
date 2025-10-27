@@ -18,6 +18,7 @@ def install(app=None):
             print("ℹ️ Table already exists; skipping create_all().")
 
         # ✅ Unregister after installation to avoid re-import metadata issues
+        print(f"Base.metadata.tables: {Base.metadata.tables}")
         if Invites.__name__ in Base.metadata.tables:
             Base.metadata.remove(Invites.__table__)
             print("🧹 Model unregistered from metadata after install.")
