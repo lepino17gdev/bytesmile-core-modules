@@ -11,12 +11,12 @@ from werkzeug.security import generate_password_hash
 from core.utils.auth_utils import require_roles
 from core.utils.utils_invites import create_invite_token, decode_invite_token
 from core.models.role import Role
-from core.models.model_invites import Invites
 from core.utils.smtp_utils import send_email
 from core.models.user import User
 from core.db import SessionLocal
 import os
 
+Invites = None 
 
 router = APIRouter(prefix="/api/invite", tags=["Invitations"])
 MY_DOMAIN = os.getenv("MY_DOMAIN")
@@ -35,6 +35,9 @@ def create_invite(data: InviteRequest):
     """
     Create an invitation link for a new staff member and store it in core_invites.
     """
+    global Invites
+    if not Invites:
+        from core.models.model_invites import Invites
     db = SessionLocal()
     role = db.query(Role).filter_by(name=data.role).first()
     if not role:
@@ -77,6 +80,9 @@ def verify_invite(token: str):
     """
     Verify if an invite token is valid and not expired.
     """
+    global Invites
+    if not Invites:
+        from core.models.model_invites import Invites
     db = SessionLocal()
     data = decode_invite_token(token)
     if not data:
@@ -101,6 +107,9 @@ def accept_invite_api(token: str = Form(...), password: str = Form(...)):
     """
     Accept invite, register new user, and mark invite as accepted.
     """
+    global Invites
+    if not Invites:
+        from core.models.model_invites import Invites
     db = SessionLocal()
     data_decoded = decode_invite_token(token)
     if not data_decoded:
@@ -149,6 +158,9 @@ def accept_invite_api(token: str = Form(...), password: str = Form(...)):
 
 @router.get("/list")
 def list_invites():
+    global Invites
+    if not Invites:
+        from core.models.model_invites import Invites
     db = SessionLocal()
     invites = db.query(Invites).all()
     data = []
@@ -167,6 +179,9 @@ def list_invites():
 
 @router.delete("/revoke")
 def revoke_invite(token: str):
+    global Invites
+    if not Invites:
+        from core.models.model_invites import Invites
     db = SessionLocal()
     invite = db.query(Invites).filter_by(token=token).first()
     if not invite:
