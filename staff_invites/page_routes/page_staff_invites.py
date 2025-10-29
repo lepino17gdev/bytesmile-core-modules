@@ -7,7 +7,7 @@ from core.utils.auth_utils import require_roles, get_current_user
 templates = Jinja2Templates(directory="templates")
 router = APIRouter(tags=["Pages"])
 
-@router.get("/staff_invites/accept", response_class=HTMLResponse)
+@router.get("/staff_invites/accept_page", response_class=HTMLResponse)
 def invite_accept_page(request: Request):
     return templates.TemplateResponse("staff_invites_accept.html", {"request": request})
 
