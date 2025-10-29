@@ -1,0 +1,1 @@
+console.log("Invites module JS loaded.");
