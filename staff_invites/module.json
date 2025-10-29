@@ -11,28 +11,28 @@
   "category": "Clinic Operations",
   "entry_point": "routes/staff_invites.py",
   "models": {
-    "models/model_invites.py": "core/models/model_invites.py"
+    "models/model_staff_invites.py": "core/models/model_staff_invites.py"
   },
   "templates": {
-    "templates/staff_invites.html": "templates/staff_invites.html"
+    "templates/staff_staff_invites.html": "templates/staff_staff_invites.html"
   },
   "sidebar_template": {
-    "templates/sidebar/sidebar_invites.html": "templates/sidebar/sidebar_invites.html"
+    "templates/sidebar/sidebar_staff_invites.html": "templates/sidebar/sidebar_staff_invites.html"
   },
   "page_routes": {
-    "page_routes/page_invites.py": "page_routes/page_invites.py"
+    "page_routes/page_staff_invites.py": "page_routes/page_staff_invites.py"
   },
   "static": {
     "css": {
-      "static/css/staff_invites.css": "static/css/staff_invites.css"
+      "static/css/staff_staff_invites.css": "static/css/staff_staff_invites.css"
     },
     "js": {
-      "static/js/staff_invites.js": "static/js/staff_invites.js",
-      "static/js/sidebar_invites.js": "static/js/sidebar_invites.js"
+      "static/js/staff_staff_invites.js": "static/js/staff_staff_invites.js",
+      "static/js/sidebar_staff_invites.js": "static/js/sidebar_staff_invites.js"
     }
   },
   "utils": {
-    "utils/utils_invites.py": "core/utils/utils_invites.py"
+    "utils/utils_staff_invites.py": "core/utils/utils_staff_invites.py"
   },
   "dependencies": {
     "python": [
@@ -46,6 +46,6 @@
     "manager",
     "staff"
   ],
-  "routes_prefix": "/api/staff_invites",
+  "routes_prefix": "/api/staff_staff_invites",
   "status": "active"
 }
