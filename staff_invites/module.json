@@ -20,7 +20,8 @@
     "utils/utils_staff_invites.py": "core/utils/utils_staff_invites.py"
   },
   "templates": {
-    "templates/staff_invites.html": "templates/staff_invites.html"
+    "templates/staff_invites.html": "templates/staff_invites.html",
+    "templates/staff_invites_accept.html": "templates/staff_invites_accept.html"
   },
   "sidebar_template": {
     "templates/sidebar/sidebar_staff_invites.html": "templates/sidebar/sidebar_staff_invites.html"
