@@ -55,7 +55,7 @@ def create_invite(data: InviteRequest):
     db.refresh(invite)
     db.close()
 
-    invite_link = f"{MY_DOMAIN}/invite/accept_page?token={token}"
+    invite_link = f"{MY_DOMAIN}/staff_invites/accept_page?token={token}"
     email_body = f"""
     <h3>You’ve been invited to join ByteSmile</h3>
     <p>You’ve been invited to register as a <b>{data.role}</b>.</p>
