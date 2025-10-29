@@ -8,7 +8,7 @@ def uninstall():
     sys.path.insert(0, models_dir)
 
     try:
-        from model_invites import Invites
+        from model_staff_invites import Invites
 
         table_name = Invites.__table__.fullname
         if table_name in Base.metadata.tables:

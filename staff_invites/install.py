@@ -9,7 +9,7 @@ def install(app=None):
     sys.path.insert(0, models_dir)
 
     try:
-        from model_invites import Invites
+        from model_staff_invites import Invites
 
         # 🧹 Remove stale class definitions in ORM registry (safe re-install)
         class_registry = getattr(Base.registry, "_class_registry", {})
