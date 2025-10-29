@@ -10,8 +10,14 @@
   "currency": "PHP",
   "category": "Clinic Operations",
   "entry_point": "routes/staff_invites.py",
+  "routes": {
+    "routes/staff_invites.py": "core/routes/staff_invites.py"
+  },
   "models": {
     "models/model_staff_invites.py": "core/models/model_staff_invites.py"
+  },
+  "utils": {
+    "utils/utils_staff_invites.py": "core/utils/utils_staff_invites.py"
   },
   "templates": {
     "templates/staff_invites.html": "templates/staff_invites.html"
@@ -30,9 +36,6 @@
       "static/js/staff_invites.js": "static/js/staff_invites.js",
       "static/js/sidebar_staff_invites.js": "static/js/sidebar_staff_invites.js"
     }
-  },
-  "utils": {
-    "utils/utils_staff_invites.py": "core/utils/utils_staff_invites.py"
   },
   "dependencies": {
     "python": [
