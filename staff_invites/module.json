@@ -14,7 +14,7 @@
     "models/model_staff_invites.py": "core/models/model_staff_invites.py"
   },
   "templates": {
-    "templates/staff_staff_invites.html": "templates/staff_staff_invites.html"
+    "templates/staff_invites.html": "templates/staff_invites.html"
   },
   "sidebar_template": {
     "templates/sidebar/sidebar_staff_invites.html": "templates/sidebar/sidebar_staff_invites.html"
@@ -24,10 +24,10 @@
   },
   "static": {
     "css": {
-      "static/css/staff_staff_invites.css": "static/css/staff_staff_invites.css"
+      "static/css/staff_invites.css": "static/css/staff_invites.css"
     },
     "js": {
-      "static/js/staff_staff_invites.js": "static/js/staff_staff_invites.js",
+      "static/js/staff_invites.js": "static/js/staff_invites.js",
       "static/js/sidebar_staff_invites.js": "static/js/sidebar_staff_invites.js"
     }
   },
@@ -46,6 +46,6 @@
     "manager",
     "staff"
   ],
-  "routes_prefix": "/api/staff_staff_invites",
+  "routes_prefix": "/api/staff_invites",
   "status": "active"
 }
