@@ -1,0 +1,54 @@
+{
+  "name": "Access Matrix",
+  "slug": "access_matrix",
+  "version": "1.0.0",
+  "path": "/access_matrix",
+  "icon": "bi bi-puzzle",
+  "description": "Managing role-based access control (RBAC).",
+  "author": "ByteSmile Core Team",
+  "price": 0.0,
+  "currency": "PHP",
+  "category": "Clinic Operations",
+  "entry_point": "routes/access_matrix.py",
+  "routes": {
+    "routes/access_matrix.py": "core/routes/access_matrix.py"
+  },
+  "models": {
+    "models/model_access_matrix.py": "core/models/model_access_matrix.py"
+  },
+  "utils": {
+    "utils/utils_access_matrix.py": "core/utils/utils_access_matrix.py"
+  },
+  "templates": {
+    "templates/access_matrix.html": "templates/access_matrix.html"
+  },
+  "sidebar_template": {
+    "templates/sidebar/sidebar_access_matrix.html": "templates/sidebar/sidebar_access_matrix.html"
+  },
+  "page_routes": {
+    "page_routes/page_access_matrix.py": "page_routes/page_access_matrix.py"
+  },
+  "static": {
+    "css": {
+      "static/css/access_matrix.css": "static/css/access_matrix.css"
+    },
+    "js": {
+      "static/js/access_matrix.js": "static/js/access_matrix.js",
+      "static/js/sidebar_access_matrix.js": "static/js/sidebar_access_matrix.js"
+    }
+  },
+  "dependencies": {
+    "python": [
+      "sqlalchemy",
+      "fastapi",
+      "jinja2"
+    ]
+  },
+  "permissions": [
+    "admin",
+    "manager",
+    "staff"
+  ],
+  "routes_prefix": "/api/access_matrix",
+  "status": "active"
+}

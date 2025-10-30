@@ -1,0 +1,14 @@
+/* Access Matrix page styles */
+.access-toolbar .form-label {
+  font-weight: 600;
+}
+.access-table tbody tr td {
+  vertical-align: middle;
+}
+.access-table .badge {
+  letter-spacing: .2px;
+}
+@media (max-width: 768px) {
+  .access-toolbar .form-label { font-size: .9rem; }
+  .access-table { font-size: .92rem; }
+}
