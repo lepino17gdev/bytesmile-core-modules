@@ -7,7 +7,7 @@ def user_has_access(user, module_name: str, permission: str = "view"):
     Wildcards in AccessMatrix are respected (*).
     Falls back to True if AccessMatrix not found.
     """
-    AccessMatrix = safe_import("access_matrix", "models", "AccessMatrix")
+    AccessMatrix = safe_import("model_access_matrix", "models", "AccessMatrix")
     if not AccessMatrix:
         return True
 
