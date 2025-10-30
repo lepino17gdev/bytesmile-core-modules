@@ -1,7 +1,8 @@
 from fastapi import APIRouter, HTTPException
 from core.db import SessionLocal
-from modules.access_matrix.models.model_access_matrix import AccessMatrix
+from utils.utils_access_matrix import safe_import_access_matrix
 
+AccessMatrix = safe_import_access_matrix()
 router = APIRouter(prefix="/api/access_matrix", tags=["Access Matrix"])
 
 @router.get("/")
