@@ -57,12 +57,21 @@ def create_invite(data: InviteRequest):
 
     invite_link = f"{MY_DOMAIN}/staff_invites/accept_page?token={token}"
     email_body = f"""
-    <h3>You’ve been invited to join ByteSmile</h3>
-    <p>You’ve been invited to register as a <b>{data.role}</b>.</p>
-    <p>Click the link below to complete your registration:</p>
-    <a href="{invite_link}">{invite_link}</a>
-    <p>This link expires on <b>{invite.expires_at.strftime('%Y-%m-%d %H:%M:%S')}</b>.</p>
+        <h3>You’ve been invited to join ByteSmile</h3>
+        <p>You’ve been invited to register as a <b>{data.role}</b>.</p>
+        <p>Click the button below to complete your registration:</p>
+        <a href="{invite_link}" style="
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #ffffff;
+            background-color: #007BFF;
+            text-decoration: none;
+            border-radius: 5px;
+        ">Complete Registration</a>
+        <p>This link expires on <b>{invite.expires_at.strftime('%Y-%m-%d %H:%M:%S')}</b>.</p>
     """
+
     send_email(data.email, "ByteSmile Invitation", email_body)
     # TODO: Send invite email here using your email service
     return {
