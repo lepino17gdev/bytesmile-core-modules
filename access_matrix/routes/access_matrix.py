@@ -1,21 +1,56 @@
 from fastapi import APIRouter, HTTPException
 from core.db import SessionLocal
 from core.utils.safe_import import safe_import
+from core.models.role import Role
+from core.models.user import User 
 
-AccessMatrix = safe_import("access_matrix", "models", "AccessMatrix")
+AccessMatrix = safe_import("model_access_matrix", "models", "AccessMatrix")
 router = APIRouter(prefix="/api/access_matrix", tags=["Access Matrix"])
 
 @router.get("/")
 def list_access():
     db = SessionLocal()
-    rows = db.query(AccessMatrix).all()
-    data = [dict(
-        id=r.id,
-        role_id=r.role_id,
-        user_id=r.user_id,
-        module=r.module,
-        permission=r.permission
-    ) for r in rows]
+
+    # 🧠 Join with roles and users if they exist
+    query = (
+        db.query(
+            AccessMatrix.id,
+            AccessMatrix.role_id,
+            Role.name.label("role_name"),
+            AccessMatrix.user_id,
+            User.username.label("user_name"),
+            User.email.label("user_email"),
+            AccessMatrix.module,
+            AccessMatrix.permission,
+        )
+        .outerjoin(Role, Role.id == AccessMatrix.role_id)
+        .outerjoin(User, User.id == AccessMatrix.user_id)
+    )
+
+    rows = query.all()
+
+    data = []
+    for r in rows:
+        data.append(
+            dict(
+                id=r.id,
+                role_id=r.role_id,
+                role_name=r.role_name,
+                user_id=r.user_id,
+                user_name=r.user_name,
+                user_email=r.user_email,
+                module=r.module,
+                permission=r.permission,
+                subject=(
+                    r.role_name
+                    or r.user_name
+                    or r.user_email
+                    or f"Role #{r.role_id}" if r.role_id else f"User #{r.user_id}"
+                ),
+                subject_type="role" if r.role_id else "user",
+            )
+        )
+
     db.close()
     return data
 

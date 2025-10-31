@@ -12,7 +12,7 @@
 </div>
 
 <div class="card border-0 shadow-sm">
-  <div class="card-body">
+  <div class="card-body"> 
     <div class="row g-3 align-items-end access-toolbar">
       <div class="col-md-3">
         <label class="form-label">Filter by Subject</label>
@@ -126,6 +126,43 @@
   </div>
 </div>
 
+
+<div class="container mt-4">
+  <h2>{{ title }}</h2>
+  <hr>
+
+  <div class="mb-3">
+    <label>Role ID</label>
+    <input type="number" id="role_id" class="form-control" placeholder="Role ID">
+
+    <label>User ID</label>
+    <input type="number" id="user_id" class="form-control" placeholder="Optional User ID">
+
+    <label>Module</label>
+    <input type="text" id="module" class="form-control" placeholder="e.g. clinic, billing">
+
+    <label>Permission</label>
+    <input type="text" id="permission" class="form-control" placeholder="e.g. view, edit">
+
+    <button class="btn btn-success mt-2" onclick="addAccess()">➕ Add Access</button>
+  </div>
+
+  <table class="table table-striped mt-4" id="accessTable">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Role ID</th>
+        <th>User ID</th>
+        <th>Module</th>
+        <th>Permission</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<script src="/static/js/access_matrix.js"></script>
 {% endblock %}
 
 {% block extra_js %}
