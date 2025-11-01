@@ -26,10 +26,7 @@
             <div class="mb-3">
               <label for="inviteRole" class="form-label">Role</label>
               <select id="inviteRole" class="form-select" required>
-                <option value="">Select role</option>
-                <option value="staff">Staff</option>
-                <option value="dentist">Dentist</option>
-                <option value="manager">Manager</option>
+                <option value="">Loading...</option>
               </select>
             </div>
           </div>
@@ -141,5 +138,26 @@
   }
 
   document.addEventListener("DOMContentLoaded", loadInvites);
+
+
+  $(document).ready(function () {
+    // Populate roles in #inviteRole
+    $.get("/api/staff_invites/roles", function (roles) {
+      const $roleSelect = $("#inviteRole");
+      $roleSelect.empty();
+
+      if (roles.length === 0) {
+        $roleSelect.append(`<option value="">No roles found</option>`);
+        return;
+      }
+
+      roles.forEach((r) => {
+        $roleSelect.append(`<option value="${r.id}">${r.name}</option>`);
+      });
+    }).fail(function () {
+      console.error("❌ Failed to load roles for invites dropdown.");
+    });
+  });
+
 </script>
 {% endblock %}

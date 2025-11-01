@@ -108,52 +108,69 @@ def verify_invite(token: str):
 @router.post("/accept")
 def accept_invite_api(token: str = Form(...), password: str = Form(...)):
     """
-    Accept invite, register new user, and mark invite as accepted.
+    Accept an invite, register a new user, and mark the invite as accepted.
+    Compatible with upgraded User model.
     """
     db = SessionLocal()
-    data_decoded = decode_invite_token(token)
-    if not data_decoded:
+    try:
+        data_decoded = decode_invite_token(token)
+        if not data_decoded:
+            raise HTTPException(status_code=400, detail="Invalid or expired invite token")
+
+        invite = db.query(Invites).filter_by(token=token).first()
+        if not invite:
+            raise HTTPException(status_code=404, detail="Invite not found")
+
+        if invite.is_expired():
+            raise HTTPException(status_code=400, detail="Invite expired")
+
+        if invite.accepted:
+            raise HTTPException(status_code=400, detail="Invite already used")
+
+        role = db.query(Role).filter_by(id=invite.role_id).first()
+        if not role:
+            raise HTTPException(status_code=400, detail="Invalid role")
+
+        # Prevent duplicates by email or username
+        existing_user = db.query(User).filter(
+            (User.username == invite.email) | (User.email == invite.email)
+        ).first()
+        if existing_user:
+            raise HTTPException(status_code=400, detail="User already exists")
+
+        # ✅ Capture invite data before closing session
+        user_email = invite.email
+        username = user_email.split("@")[0]
+        role_name = role.name
+
+        # Create the new staff user
+        new_user = User(
+            username=username,
+            email=user_email,
+            full_name=username.title(),
+            password_hash=generate_password_hash(password),
+            role_id=invite.role_id,
+            position_title=role_name.title(),
+            department="Clinic",
+            is_active=True,
+            created_at=datetime.utcnow(),
+        )
+
+        invite.accepted = True
+        db.add(new_user)
+        db.commit()
+
+        return {
+            "message": f"✅ Invite accepted. User '{username}' created successfully as '{role_name}'."
+        }
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=f"Server error during invite acceptance: {e}")
+    finally:
         db.close()
-        raise HTTPException(status_code=400, detail="Invalid or expired invite token")
-
-    invite = db.query(Invites).filter_by(token=token).first()
-    if not invite:
-        db.close()
-        raise HTTPException(status_code=404, detail="Invites not found")
-
-    if invite.is_expired():
-        db.close()
-        raise HTTPException(status_code=400, detail="Invites expired")
-
-    if invite.accepted:
-        db.close()
-        raise HTTPException(status_code=400, detail="Invites already used")
-
-    role = db.query(Role).filter_by(id=invite.role_id).first()
-    if not role:
-        db.close()
-        raise HTTPException(status_code=400, detail="Invalid role")
-
-    if db.query(User).filter_by(username=invite.email).first():
-        db.close()
-        raise HTTPException(status_code=400, detail="User already exists")
-
-    # ✅ Capture these before closing the session
-    user_email = invite.email
-    role_name = role.name
-
-    # Create the new user
-    new_user = User(
-        username=user_email,
-        password_hash=generate_password_hash(password),
-        role_id=invite.role_id
-    )
-    invite.accepted = True
-    db.add(new_user)
-    db.commit()
-    db.close()
-
-    return {"message": f"Invites accepted, user '{user_email}' created successfully as '{role_name}'"}
 
 
 @router.get("/list")
@@ -188,3 +205,12 @@ def revoke_invite(token: str):
     db.close()
     return {"message": "Invites revoked successfully"}
 
+
+@router.get("/roles")
+def get_roles():
+    """Return all available roles for invites dropdown."""
+    db = SessionLocal()
+    roles = db.query(Role).order_by(Role.name.asc()).all()
+    data = [{"id": r.id, "name": r.name} for r in roles]
+    db.close()
+    return data
