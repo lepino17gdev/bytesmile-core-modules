@@ -106,11 +106,13 @@
   document.getElementById("inviteForm").addEventListener("submit", async (e) => {
     e.preventDefault();
     const email = document.getElementById("inviteEmail").value;
-    const role = document.getElementById("inviteRole").value;
+    const roleSelect = document.getElementById("inviteRole");
+    const role_id = roleSelect.value;
+    const role = roleSelect.options[roleSelect.selectedIndex].text;
     const res = await fetch("/api/staff_invites/create", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, role })
+      body: JSON.stringify({ email, role, role_id })
     });
     if (res.ok) {
       alert("Invite sent successfully!");
@@ -139,8 +141,7 @@
 
   document.addEventListener("DOMContentLoaded", loadInvites);
 
-
-  $(document).ready(function () {
+   $(document).ready(function () {
     // Populate roles in #inviteRole
     $.get("/api/staff_invites/roles", function (roles) {
       const $roleSelect = $("#inviteRole");
